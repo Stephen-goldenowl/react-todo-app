@@ -8,14 +8,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { GoalIcon, House, LogOut, Search, Settings } from "lucide-react";
+import { GoalIcon, LogOut, Search, Settings, CalendarIcon } from "lucide-react";
 
 export function AppSidebar() {
   const items = [
     {
-      title: "Home",
+      title: "Todos",
       url: "/",
-      icon: House,
+      icon: CalendarIcon,
     },
     {
       title: "Search",
@@ -28,7 +28,7 @@ export function AppSidebar() {
       icon: Settings,
     },
     {
-      title: "logout",
+      title: "Logout",
       url: "/",
       icon: LogOut,
     },
