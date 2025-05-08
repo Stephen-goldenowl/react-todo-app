@@ -7,13 +7,16 @@ import { getTodos } from "@/services/todo";
 import { useQuery } from "@tanstack/react-query";
 import { Todo } from "@/types/todo";
 import CustomSkeleton from "@/components/Skeleton";
+import { Input } from "@/components/ui/input";
+
 export default function HomePage() {
   const { data, isLoading } = useQuery({
     queryKey: ["todos"],
     queryFn: getTodos,
   });
 
-  const [todos, setTodos] = useState<Todo[]>(data?.todos || []);
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (data?.todos) {
@@ -28,32 +31,43 @@ export default function HomePage() {
       completed: false,
       userId: 1,
     };
-
-    setTodos([...todos, newTodo]);
+    setTodos((prev) => [...prev, newTodo]);
   };
 
   const handleRemoveTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
   const handleMarkDone = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
+    setTodos((prev) =>
+      prev.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
 
+  const filteredTodos = todos
+    .filter((todo) => todo.todo.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => b.id - a.id);
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-full max-w-4xl mx-auto px-4">
         <PageTitle title="Todos" />
-        <div className="flex flex-col mt-4 pb-32">
+
+        <Input
+          placeholder="Search todos..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mt-4 mb-6"
+        />
+
+        <div className="flex flex-col pb-32">
           {isLoading ? (
             <CustomSkeleton />
           ) : (
             <TodoList
-              todos={todos.sort((a, b) => b.id - a.id)}
+              todos={filteredTodos}
               onRemove={handleRemoveTodo}
               onMarkDone={handleMarkDone}
             />
