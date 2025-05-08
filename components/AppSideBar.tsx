@@ -8,8 +8,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { GoalIcon, LogOut, Search, Settings, CalendarIcon } from "lucide-react";
-
+import { GoalIcon, Settings, CalendarIcon } from "lucide-react";
+import LogoutButton from "./LogoutButton";
 export function AppSidebar() {
   const items = [
     {
@@ -18,19 +18,9 @@ export function AppSidebar() {
       icon: CalendarIcon,
     },
     {
-      title: "Search",
-      url: "/search",
-      icon: Search,
-    },
-    {
       title: "Setting",
       url: "/setting",
       icon: Settings,
-    },
-    {
-      title: "Logout",
-      url: "/",
-      icon: LogOut,
     },
   ];
   return (
@@ -57,6 +47,7 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <LogoutButton />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
