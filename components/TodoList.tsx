@@ -6,10 +6,12 @@ const TodoList = ({
   todos,
   onRemove,
   onMarkDone,
+  onUpdate,
 }: {
   todos: Todo[];
   onRemove: (id: number) => void;
   onMarkDone: (id: number) => void;
+  onUpdate: (id: number, newTitle: string) => void;
 }) => {
   const markDoneHandler = (id: number) => {
     onMarkDone(id);
@@ -17,6 +19,10 @@ const TodoList = ({
 
   const removeHandler = (id: number) => {
     onRemove(id);
+  };
+
+  const handleUpdateTodo = (id: number, newTitle: string) => {
+    onUpdate(id, newTitle);
   };
 
   return (
@@ -27,6 +33,7 @@ const TodoList = ({
           todo={todo}
           markDone={markDoneHandler}
           onRemove={removeHandler}
+          onUpdate={handleUpdateTodo}
         />
       ))}
     </ul>
