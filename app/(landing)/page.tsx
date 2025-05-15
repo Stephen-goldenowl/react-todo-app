@@ -50,6 +50,12 @@ export default function HomePage() {
     .filter((todo) => todo.todo.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => b.id - a.id);
 
+  const handleUpdateTodo = (id: number, newTitle: string) => {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, todo: newTitle } : todo))
+    );
+  };
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-full max-w-4xl mx-auto px-4">
@@ -70,6 +76,7 @@ export default function HomePage() {
               todos={filteredTodos}
               onRemove={handleRemoveTodo}
               onMarkDone={handleMarkDone}
+              onUpdate={handleUpdateTodo}
             />
           )}
         </div>
